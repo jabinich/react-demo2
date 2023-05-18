@@ -1,17 +1,68 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { combineReducers } from 'redux';
+import { legacy_createStore as createStore} from 'redux'
+import Counter from './Counter';
+import ContactInput from './ContactInput';
+import ContactList from './ContactList';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+//Reducer Contacts
+const contacts = ["James Smith", "Thomas Anderson", "Bruce Wayne"];
+const initialStateContacts = {
+  contacts: contacts
+};
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function reducerContacts(state = initialStateContacts, action){
+  switch(action.type) {
+    case 'ADDCONTACT':
+      return { contacts: [...state.contacts, action.name] };
+    case 'DELCONTACT':
+      const newContacts = [...state.contacts];
+      newContacts.splice(action.index, 1);
+      return { contacts: newContacts };
+
+      /*
+      const newContacts = state.contacts.filter(
+        (_, index) => index !== action.index
+      );
+      return {
+        ...state,
+        contacts: newContacts
+      };*/
+
+    default:
+      return state;
+  }
+}
+
+//Reducer Person
+const name = '';
+const initialStatePerson = {
+  name: name
+}
+
+function reducerPerson(state = initialStatePerson, action){
+  switch(action.type) {
+    case 'INPUTCHANGE':
+      return { name: action.name };
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  input: reducerPerson,
+  list: reducerContacts
+});
+
+//Store
+const store = createStore(rootReducer);
+
+const el = <Provider store={store}>
+    <ContactInput/>
+    <ContactList/>
+  </Provider>; 
+
+createRoot(document.getElementById('root')).render(el);

@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1, p {
+  font-family: Lato;
+}
+ul {
+  padding: 0;
+  margin:10px 0 0 0;
+}
+li {
+  list-style-type: none;
+  padding: 6px;
+  margin-right: 20px;
+  background-color:rgba(61, 120, 175, 0.411);
+  border-radius: 10px;
+  flex:1;
+}
+form {
+  margin: 10px;
+}
+
+.item_div {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}
+
+
+button {
+  flex-shrink: 0;
+}
