@@ -17,11 +17,11 @@ const initialStateContacts = {
 function reducerContacts(state = initialStateContacts, action){
   switch(action.type) {
     case 'ADDCONTACT':
-      return { contacts: [...state.contacts, action.name] };
+      return { ...state, contacts: [...state.contacts, action.name] };
     case 'DELCONTACT':
       const newContacts = [...state.contacts];
       newContacts.splice(action.index, 1);
-      return { contacts: newContacts };
+      return { ...state, contacts: newContacts };
 
       /*
       const newContacts = state.contacts.filter(
